@@ -15,7 +15,7 @@ using namespace std;
 
 
 
-//Ksia¿ki
+//KsiaÂ¿ki
 Ksiazka::Ksiazka() : id(0), ISBN(0), tytul(""), autor(""), okladka("") {}
 
 Ksiazka::Ksiazka(string t, string au, int isbn, string okl)
@@ -30,12 +30,12 @@ std::ostream& operator<<(std::ostream& os, const Ksiazka& k) {
 
 
 
-//Baza Ksi¹¿ek
+//Baza KsiÂ¹Â¿ek
 
 BazaKsiazek::BazaKsiazek() {
 	ifstream plik(nazwa_pliku);
 	if (!plik) {
-		ofstream nowy_plik(nazwa_pliku); // Tworzymy plik, jeœli nie istnieje
+		ofstream nowy_plik(nazwa_pliku); // Tworzymy plik, jeÅ“li nie istnieje
 	}
 	else {
 		loadFromFile();
@@ -47,7 +47,7 @@ void BazaKsiazek::loadFromFile() {
 
 	ifstream plik(nazwa_pliku);
 	if (!plik) {
-		std::cerr << "Nie mo¿na otworzyæ pliku: " << nazwa_pliku << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku: " << nazwa_pliku << std::endl;
 		return;
 	}
 
@@ -56,14 +56,14 @@ void BazaKsiazek::loadFromFile() {
 		std::stringstream ss(linia);
 		string id_str, tytul, autor, isbn_str, okladka;
 
-		// Rozdziel linie na poszczególne czêœci, oddzielone przecinkami
+		// Rozdziel linie na poszczegÃ³lne czÃªÅ“ci, oddzielone przecinkami
 		if (std::getline(ss, id_str, ',') &&
 			std::getline(ss, tytul, ',') &&
 			std::getline(ss, autor, ',') &&
 			std::getline(ss, isbn_str, ',') &&
 			std::getline(ss, okladka)) {
 
-			// Usuñ ewentualne spacje na pocz¹tku i koñcu
+			// UsuÃ± ewentualne spacje na poczÂ¹tku i koÃ±cu
 			tytul = trim(tytul);
 			autor = trim(autor);
 			okladka = trim(okladka);
@@ -71,7 +71,7 @@ void BazaKsiazek::loadFromFile() {
 			int id = std::stoi(trim(id_str));
 			int isbn = std::stoi(trim(isbn_str));
 
-			// Utwórz obiekt Ksiazka i dodaj go do wektora
+			// UtwÃ³rz obiekt Ksiazka i dodaj go do wektora
 			Ksiazka ksiazka(tytul, autor, isbn, okladka);
 			ksiazka.id = id;
 			lista_ksiazek.push_back(ksiazka);
@@ -84,7 +84,7 @@ void BazaKsiazek::loadFromFile() {
 void BazaKsiazek::saveToFile() {
 	ofstream plik(nazwa_pliku, ios::trunc);
 	if (!plik) {
-		std::cerr << "Nie mo¿na otworzyæ pliku do zapisu: " << nazwa_pliku << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku do zapisu: " << nazwa_pliku << std::endl;
 		return;
 	}
 
@@ -96,7 +96,7 @@ void BazaKsiazek::saveToFile() {
 	plik.close();
 }
 
-// Funkcja pomocnicza do usuwania spacji z pocz¹tku i koñca stringa
+// Funkcja pomocnicza do usuwania spacji z poczÂ¹tku i koÃ±ca stringa
 static std::string trim(const std::string& str) {
 	const auto strBegin = str.find_first_not_of(" \t");
 	const auto strEnd = str.find_last_not_of(" \t");
@@ -107,11 +107,11 @@ static std::string trim(const std::string& str) {
 
 void BazaKsiazek::add(string t, string au, int isbn, string okl) {
 	if (wyszukaj_czy_jest(isbn)) {
-		throw runtime_error("Ksi¹¿ka o podanym ISBN ju¿ istnieje.");
+		throw runtime_error("KsiÂ¹Â¿ka o podanym ISBN juÂ¿ istnieje.");
 	}
 	else {
 		if (wyszukaj_czy_jest(t)) {
-			throw runtime_error("Ksi¹¿ka o podanym tytule ju¿ istnieje.");
+			throw runtime_error("KsiÂ¹Â¿ka o podanym tytule juÂ¿ istnieje.");
 		}
 		else {
 			Ksiazka nowa(t, au, isbn, okl);
@@ -124,7 +124,7 @@ void BazaKsiazek::add(string t, string au, int isbn, string okl) {
 				<< nowa.ISBN << ", " << nowa.okladka << "\n";
 			plik.close();
 
-			this->loadFromFile(); // Aktualizacja listy ksi¹¿ek
+			this->loadFromFile(); // Aktualizacja listy ksiÂ¹Â¿ek
 		}
 	}
 }
@@ -172,7 +172,7 @@ Ksiazka BazaKsiazek::wyszukaj(const std::string& tyt) const {
 			return ksiazka;
 		}
 	}
-	throw std::runtime_error("Nie znaleziono ksi¹¿ki o podanym tytule.");
+	throw std::runtime_error("Nie znaleziono ksiÂ¹Â¿ki o podanym tytule.");
 }
 
 Ksiazka BazaKsiazek::wyszukaj(int isbn) const {
@@ -181,7 +181,7 @@ Ksiazka BazaKsiazek::wyszukaj(int isbn) const {
 			return ksiazka;
 		}
 	}
-	throw runtime_error("Nie znaleziono ksi¹¿ki o podanym ISBN.");
+	throw runtime_error("Nie znaleziono ksiÂ¹Â¿ki o podanym ISBN.");
 }
 
 
@@ -217,25 +217,25 @@ void Bibliotekarz::akceptacja_wyp(BazaWypozyczen& baza_wyp, int isbn, BazaSkryte
 			throw std::runtime_error("Brak wolnych skrytek.");
 		}
 
-		// Zajmij skrytkê
+		// Zajmij skrytkÃª
 		baza_skrytek.zajmij(numer_skrytki, isbn);
 
-		// Dodaj wypo¿yczenie do listy
+		// Dodaj wypoÂ¿yczenie do listy
 		baza_wyp.add(data_wyp, data_odd, numer_skrytki, isbn, it->getLogin());
 
-		// Usuñ wypo¿yczenie z poczekalni
+		// UsuÃ± wypoÂ¿yczenie z poczekalni
 		baza_wyp.end_wyp(isbn);
 
-		// Wys³anie emaila
+		// WysÂ³anie emaila
 		string email = baza_uz.wyszukaj(it->getLogin()).getEmail();
 		string tyt = baza_ks.wyszukaj(isbn).tytul;
 		sendEmail(email, it->getLogin(), tyt, data_odd, numer_skrytki);
 
 
-		std::cout << "Wypo¿yczenie zaakceptowane: ISBN " << isbn << " w skrytce " << numer_skrytki << "." << std::endl;
+		std::cout << "WypoÂ¿yczenie zaakceptowane: ISBN " << isbn << " w skrytce " << numer_skrytki << "." << std::endl;
 	}
 	else {
-		throw std::runtime_error("Nie znaleziono wypo¿yczenia o podanym ISBN.");
+		throw std::runtime_error("Nie znaleziono wypoÂ¿yczenia o podanym ISBN.");
 	}
 }
 
@@ -252,7 +252,7 @@ void Bibliotekarz::sendEmail(string email, string login, string tyt, string dat,
 		std::cerr << "\nWynik system(): " << wynik << "\n";
 	}
 	else {
-		cout<<"Nie uda³o siê wys³aæ emaila"<<endl;
+		cout<<"Nie udaÂ³o siÃª wysÂ³aÃ¦ emaila"<<endl;
 	}
 }
 
@@ -314,7 +314,7 @@ void Czytelnik::wypozycz(int isbn, string login, BazaKsiazek baza_ksiazek, BazaW
 		baza_wyp.przyznanieWyp(login, isbn, baza_skrytek);
 	}
 	else {
-		throw runtime_error("Nie znaleziono ksi¹¿ki o podanym ISBN.");
+		throw runtime_error("Nie znaleziono ksiÂ¹Â¿ki o podanym ISBN.");
 	}
 	
 }
@@ -360,12 +360,12 @@ bool Czytelnik::invertBlodaka() {
 }
 
 
-//Baza u¿ytkowników
+//Baza uÂ¿ytkownikÃ³w
 BazaUzytkownikow::BazaUzytkownikow() {
 	ifstream plik(nazwa_pliku);
 	ifstream plik_blokady(nazwa_pliku_blokady);
 	if (!plik) {
-		ofstream nowy_plik(nazwa_pliku); // Tworzymy plik, jeœli nie istnieje
+		ofstream nowy_plik(nazwa_pliku); // Tworzymy plik, jeÅ“li nie istnieje
 	}
 	else {
 		loadFromFile();
@@ -386,7 +386,7 @@ void BazaUzytkownikow::add(string i, string n, string e, string a, int tel, stri
 
 	ofstream plik(nazwa_pliku, ios::app);
 	if (!plik) {
-		cerr << "B³¹d przy otwieraniu pliku: " << nazwa_pliku << endl;
+		cerr << "BÂ³Â¹d przy otwieraniu pliku: " << nazwa_pliku << endl;
 	}
 	else {
 		plik << nowy.id << " " << nowy.imie << " " << nowy.nazwisko
@@ -395,9 +395,9 @@ void BazaUzytkownikow::add(string i, string n, string e, string a, int tel, stri
 		plik.close();
 	}
 
-	cout << "Dodano u¿ytkownika: " << nowy.imie << " " << nowy.nazwisko << endl;
+	cout << "Dodano uÂ¿ytkownika: " << nowy.imie << " " << nowy.nazwisko << endl;
 
-	loadFromFile(); // Aktualizacja danych w pamiêci
+	loadFromFile(); // Aktualizacja danych w pamiÃªci
 }
 
 void BazaUzytkownikow::usun(const std::string& login) {
@@ -408,7 +408,7 @@ void BazaUzytkownikow::usun(const std::string& login) {
 		saveToFile();
 	}
 	else {
-		throw std::runtime_error("Nie znaleziono u¿ytkownika");
+		throw std::runtime_error("Nie znaleziono uÂ¿ytkownika");
 	}
 }
 
@@ -421,7 +421,7 @@ void BazaUzytkownikow::loadFromFile() {
 
 	ifstream plik(nazwa_pliku);
 	if (!plik) {
-		cerr << "B³¹d przy otwieraniu pliku: " << nazwa_pliku << endl;
+		cerr << "BÂ³Â¹d przy otwieraniu pliku: " << nazwa_pliku << endl;
 		return;
 	}
 
@@ -488,7 +488,7 @@ Czytelnik BazaUzytkownikow::wyszukaj(const string& login) const {
 		}
 	}
 
-	throw runtime_error("Nie znaleziono u¿ytkownika o podanym loginie.");
+	throw runtime_error("Nie znaleziono uÂ¿ytkownika o podanym loginie.");
 }
 
 void BazaUzytkownikow::loadBlockedFromFile() {
@@ -561,7 +561,7 @@ vector<Czytelnik>  BazaUzytkownikow::getlista_zablokowanych() {
 
 
 
-//Wypo¿yczenie
+//WypoÂ¿yczenie
 Wypozyczenie::Wypozyczenie(string dat_wyp, string dat_od, int skr, int num_ks, string log) {
 	data_wypozyczenia = dat_wyp;
 	data_oddania = dat_od;
@@ -571,7 +571,7 @@ Wypozyczenie::Wypozyczenie(string dat_wyp, string dat_od, int skr, int num_ks, s
 }
 
 ostream& operator<<(ostream& os, const Wypozyczenie& w) {
-	os << "Data wypo¿yczenia: " << w.data_wypozyczenia << "\nData oddania: " << w.data_oddania << "\nNumer skrytki: " << w.numer_skrytki << "\nISBN ksi¹¿ki: " << w.isbn_ksiazki << "\nLogin u¿ytkownika: "<<w.login_czytelnika<<"\n";
+	os << "Data wypoÂ¿yczenia: " << w.data_wypozyczenia << "\nData oddania: " << w.data_oddania << "\nNumer skrytki: " << w.numer_skrytki << "\nISBN ksiÂ¹Â¿ki: " << w.isbn_ksiazki << "\nLogin uÂ¿ytkownika: "<<w.login_czytelnika<<"\n";
 	return os;
 }
 
@@ -613,8 +613,8 @@ int Skrytka::getNumerWypozyczenia() {
 BazaSkrytek::BazaSkrytek(int num) {
 	ifstream plik(nazwa_pliku);
 	if (!plik.is_open() || plik.peek() == std::ifstream::traits_type::eof()) {
-		// Jeœli plik nie istnieje lub jest pusty, tworzymy now¹ listê skrytek
-		lista_skrytek.clear(); // Upewniamy siê, ¿e lista jest pusta
+		// JeÅ“li plik nie istnieje lub jest pusty, tworzymy nowÂ¹ listÃª skrytek
+		lista_skrytek.clear(); // Upewniamy siÃª, Â¿e lista jest pusta
 		for (int i = 0; i < num; i++) {
 			int id = i + 1;
 			bool wolna = true;
@@ -622,10 +622,10 @@ BazaSkrytek::BazaSkrytek(int num) {
 			Skrytka nowa(id, wolna, numer_wypozyczenia);
 			lista_skrytek.push_back(nowa);
 		}
-		saveToFile(); // Zapisujemy nowo utworzon¹ listê do pliku
+		saveToFile(); // Zapisujemy nowo utworzonÂ¹ listÃª do pliku
 	}
 	else {
-		loadFromFile(); // Wczytujemy dane z istniej¹cego pliku
+		loadFromFile(); // Wczytujemy dane z istniejÂ¹cego pliku
 		plik.close();
 	}
 }
@@ -649,7 +649,7 @@ void BazaSkrytek::loadFromFile() {
 void BazaSkrytek::saveToFile() {
 	ofstream plik(nazwa_pliku, ios::trunc);
 	if (!plik.is_open()) {
-		std::cerr << "Nie mo¿na otworzyæ pliku do zapisu: " << nazwa_pliku << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku do zapisu: " << nazwa_pliku << std::endl;
 		return;
 	}
 
@@ -673,16 +673,16 @@ void BazaSkrytek::add() {
 	Skrytka nowa(id, wolna, numer_wypozyczenia);
 	lista_skrytek.push_back(nowa);
 
-	saveToFile(); // Zapisujemy aktualizowan¹ listê do pliku
+	saveToFile(); // Zapisujemy aktualizowanÂ¹ listÃª do pliku
 }
 
 
 void BazaSkrytek::zajmij(int id, int isbn) {
 	if (id > 0 && id <= static_cast<int>(lista_skrytek.size())) {
-		Skrytka& skrytka = lista_skrytek[id - 1]; // Indeksy zaczynaj¹ siê od 0
+		Skrytka& skrytka = lista_skrytek[id - 1]; // Indeksy zaczynajÂ¹ siÃª od 0
 
 		if (!skrytka.wolna) {
-			std::cerr << "Skrytka " << id << " jest ju¿ zajêta!" << std::endl;
+			std::cerr << "Skrytka " << id << " jest juÂ¿ zajÃªta!" << std::endl;
 			return;
 		}
 
@@ -690,28 +690,28 @@ void BazaSkrytek::zajmij(int id, int isbn) {
 		skrytka.numer_wypozyczenia = isbn;
 
 		saveToFile(); // Zapisz zmiany do pliku
-		std::cout << "Skrytka " << id << " zosta³a zajêta dla ISBN " << isbn << "." << std::endl;
+		std::cout << "Skrytka " << id << " zostaÂ³a zajÃªta dla ISBN " << isbn << "." << std::endl;
 	}
 	else {
-		std::cerr << "Nieprawid³owy numer skrytki: " << id << std::endl;
+		std::cerr << "NieprawidÂ³owy numer skrytki: " << id << std::endl;
 	}
 }
 
 void BazaSkrytek::zwolnij(int id) {
 	if (id > 0 && id <= static_cast<int>(lista_skrytek.size())) {
-		Skrytka& skrytka = lista_skrytek[id - 1]; // Indeksy zaczynaj¹ siê od 0
+		Skrytka& skrytka = lista_skrytek[id - 1]; // Indeksy zaczynajÂ¹ siÃª od 0
 		if (!skrytka.wolna) {
 			skrytka.wolna = true;
-			skrytka.numer_wypozyczenia = -1; // Ustaw wartoœæ domyœln¹
+			skrytka.numer_wypozyczenia = -1; // Ustaw wartoÅ“Ã¦ domyÅ“lnÂ¹
 			saveToFile(); // Zapisz zmiany do pliku
-			std::cout << "Skrytka " << id << " zosta³a zwolniona.\n";
+			std::cout << "Skrytka " << id << " zostaÂ³a zwolniona.\n";
 		}
 		else {
-			std::cout << "Skrytka " << id << " ju¿ jest wolna.\n";
+			std::cout << "Skrytka " << id << " juÂ¿ jest wolna.\n";
 		}
 	}
 	else {
-		std::cerr << "Nieprawid³owy numer skrytki: " << id << "\n";
+		std::cerr << "NieprawidÂ³owy numer skrytki: " << id << "\n";
 	}
 }
 
@@ -741,13 +741,13 @@ void BazaSkrytek::usun_skrytke(int id) {
 			return;
 		}
 	}
-	throw runtime_error("Nie znaleziono skrytki o podanym ID do usuniêcia.");
+	throw runtime_error("Nie znaleziono skrytki o podanym ID do usuniÃªcia.");
 }
 
 int BazaSkrytek::getFirstFree() {
 	for (size_t i = 0; i < lista_skrytek.size(); ++i) {
 		if (lista_skrytek[i].wolna) {
-			return lista_skrytek[i].id; // Zwróæ ID skrytki, a nie indeks
+			return lista_skrytek[i].id; // ZwrÃ³Ã¦ ID skrytki, a nie indeks
 		}
 	}
 	return -1; // Brak wolnych skrytek
@@ -756,7 +756,7 @@ int BazaSkrytek::getFirstFree() {
 
 ostream& operator<<(ostream& os, const Skrytka& skrytka) {
 	os << "[" << skrytka.id << ", wolna: " << (skrytka.wolna ? "tak" : "nie")
-		<< ", numer wypo¿yczenia: " << skrytka.numer_wypozyczenia << "]\n";
+		<< ", numer wypoÂ¿yczenia: " << skrytka.numer_wypozyczenia << "]\n";
 	return os;
 }
 
@@ -764,13 +764,13 @@ ostream& operator<<(ostream& os, const Skrytka& skrytka) {
 
 
 
-//Baza wypo¿yczeñ
+//Baza wypoÂ¿yczeÃ±
 BazaWypozyczen::BazaWypozyczen() {
 	ifstream plik(nazwa_pliku);
 	ifstream plik_pocz(nazwa_pliku_pocz);
 	ifstream plik_zwrotow(nazwa_pliku_zwrotow);
 	if (!plik) {
-		ofstream nowy_plik(nazwa_pliku); // Tworzymy plik, jeœli nie istnieje
+		ofstream nowy_plik(nazwa_pliku); // Tworzymy plik, jeÅ“li nie istnieje
 	}
 	else {
 		loadFromFile();
@@ -795,7 +795,7 @@ void BazaWypozyczen::loadFromFile() {
 	lista_wypozyczen.clear();
 	std::ifstream plik(nazwa_pliku);
 	if (!plik.is_open()) {
-		std::cerr << "Nie mo¿na otworzyæ pliku: " << nazwa_pliku << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku: " << nazwa_pliku << std::endl;
 		return;
 	}
 
@@ -813,7 +813,7 @@ void BazaWypozyczen::loadFromFile_pocz() {
 	std::ifstream plik(nazwa_pliku_pocz);
 
 	if (!plik.is_open()) {
-		std::cerr << "Nie mo¿na otworzyæ pliku: " << nazwa_pliku_pocz << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku: " << nazwa_pliku_pocz << std::endl;
 		return;
 	}
 
@@ -849,17 +849,17 @@ void BazaWypozyczen::saveToFile() {
 
 
 void BazaWypozyczen::end_wyp(int isbn) {
-	// ZnajdŸ i usuñ wypo¿yczenie z poczekalni
+	// ZnajdÅ¸ i usuÃ± wypoÂ¿yczenie z poczekalni
 	auto it = std::remove_if(lista_wypozyczen_pocz.begin(), lista_wypozyczen_pocz.end(),
 		[isbn](const Wypozyczenie& wyp) { return wyp.isbn_ksiazki == isbn; });
 
 	if (it != lista_wypozyczen_pocz.end()) {
 		lista_wypozyczen_pocz.erase(it, lista_wypozyczen_pocz.end());
 		saveToFile_pocz(); // Zapisz zmiany do pliku
-		std::cout << "Usuniêto wypo¿yczenie dla ISBN: " << isbn << std::endl;
+		std::cout << "UsuniÃªto wypoÂ¿yczenie dla ISBN: " << isbn << std::endl;
 	}
 	else {
-		std::cerr << "Nie znaleziono wypo¿yczenia dla ISBN: " << isbn << std::endl;
+		std::cerr << "Nie znaleziono wypoÂ¿yczenia dla ISBN: " << isbn << std::endl;
 	}
 }
 
@@ -874,7 +874,7 @@ void BazaWypozyczen::saveWyp() {
 void BazaWypozyczen::saveToFile_pocz() {
 	std::ofstream plik(nazwa_pliku_pocz, std::ios::trunc);
 	if (!plik.is_open()) {
-		std::cerr << "Nie mo¿na otworzyæ pliku do zapisu: " << nazwa_pliku_pocz << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku do zapisu: " << nazwa_pliku_pocz << std::endl;
 		return;
 	}
 
@@ -886,7 +886,7 @@ void BazaWypozyczen::saveToFile_pocz() {
 
 void BazaWypozyczen::przyznanieWyp(string login, int isbn, BazaSkrytek baza_skrytek) {
 	if (isBookBorrowed(isbn)) {
-		cout << "Ksi¹¿ka o ISBN " << isbn << " jest ju¿ wypo¿yczona.\n";
+		cout << "KsiÂ¹Â¿ka o ISBN " << isbn << " jest juÂ¿ wypoÂ¿yczona.\n";
 		return;
 	}
 
@@ -896,7 +896,7 @@ void BazaWypozyczen::przyznanieWyp(string login, int isbn, BazaSkrytek baza_skry
 		return;
 	}
 
-	// Dodanie wypo¿yczenia do poczekalni
+	// Dodanie wypoÂ¿yczenia do poczekalni
 
 	lista_wypozyczen_pocz.push_back(Wypozyczenie("", "", skr, isbn, login));
 	ofstream plik(nazwa_pliku_pocz, ios::app);
@@ -915,7 +915,7 @@ std::vector<Wypozyczenie> BazaWypozyczen::getlista_wypozyczen_pocz() {
 		cout<<it.isbn_ksiazki<<endl;
 	}*/
 
-	return lista_wypozyczen_pocz; // Zwróæ wektor
+	return lista_wypozyczen_pocz; // ZwrÃ³Ã¦ wektor
 }
 
 void BazaWypozyczen::add(string dat_wyp, string dat_od, int skr, int num_ks, string log) {
@@ -925,7 +925,7 @@ void BazaWypozyczen::add(string dat_wyp, string dat_od, int skr, int num_ks, str
 }
 
 bool BazaWypozyczen::isBookBorrowed(int isbn) const {
-	// Sprawdzenie w g³ównej liœcie wypo¿yczeñ
+	// Sprawdzenie w gÂ³Ã³wnej liÅ“cie wypoÂ¿yczeÃ±
 	for (const auto& wypozyczenie : lista_wypozyczen) {
 		if (wypozyczenie.isbn_ksiazki == isbn) {
 			return true;
@@ -945,29 +945,29 @@ void BazaWypozyczen::przeniesDoZwrotow(int isbn) {
 		[isbn](const Wypozyczenie& wyp) { return wyp.isbn_ksiazki == isbn; });
 
 	if (it != lista_wypozyczen.end()) {
-		// Dodaj wypo¿yczenie do listy zwrotów
+		// Dodaj wypoÂ¿yczenie do listy zwrotÃ³w
 		lista_wypozyczen_zwroty.push_back(*it);
 
-		// Usuñ wypo¿yczenie z listy aktywnych
+		// UsuÃ± wypoÂ¿yczenie z listy aktywnych
 		lista_wypozyczen.erase(it);
 
 		// Zapisz zmiany w obu listach
 		saveToFile();
 		saveToFileZwroty();
 
-		std::cout << "Przeniesiono ISBN: " << isbn << " do listy zwrotów.\n";
+		std::cout << "Przeniesiono ISBN: " << isbn << " do listy zwrotÃ³w.\n";
 	}
 	else {
-		std::cerr << "Nie znaleziono wypo¿yczenia o ISBN: " << isbn << " w aktywnych wypo¿yczeniach.\n";
+		std::cerr << "Nie znaleziono wypoÂ¿yczenia o ISBN: " << isbn << " w aktywnych wypoÂ¿yczeniach.\n";
 	}
 }
 
 void BazaWypozyczen::loadFromFileZwroty() {
-	lista_wypozyczen_zwroty.clear(); // U¿ywamy tej samej listy, co dla poczekalni zwrotów
+	lista_wypozyczen_zwroty.clear(); // UÂ¿ywamy tej samej listy, co dla poczekalni zwrotÃ³w
 	std::ifstream plik(nazwa_pliku_zwrotow);
 
 	if (!plik.is_open()) {
-		std::cerr << "Nie mo¿na otworzyæ pliku: " << nazwa_pliku_zwrotow << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku: " << nazwa_pliku_zwrotow << std::endl;
 		return;
 	}
 
@@ -988,7 +988,7 @@ void BazaWypozyczen::loadFromFileZwroty() {
 void BazaWypozyczen::saveToFileZwroty() {
 	std::ofstream plik(nazwa_pliku_zwrotow, std::ios::trunc);
 	if (!plik.is_open()) {
-		std::cerr << "Nie mo¿na otworzyæ pliku do zapisu: " << nazwa_pliku_zwrotow << std::endl;
+		std::cerr << "Nie moÂ¿na otworzyÃ¦ pliku do zapisu: " << nazwa_pliku_zwrotow << std::endl;
 		return;
 	}
 
@@ -1006,7 +1006,7 @@ void BazaWypozyczen::setZwroty() {
 
 std::vector<Wypozyczenie> BazaWypozyczen::getlista_wypozyczen_zwroty() {
 	loadFromFileZwroty(); // Wczytaj dane z pliku do listy
-	return lista_wypozyczen_zwroty; // Zwróæ wektor
+	return lista_wypozyczen_zwroty; // ZwrÃ³Ã¦ wektor
 }
 
 void BazaWypozyczen::usunZwrot(int isbn) {
@@ -1014,7 +1014,7 @@ void BazaWypozyczen::usunZwrot(int isbn) {
 		[isbn](const Wypozyczenie& wyp) { return wyp.isbn_ksiazki == isbn; });
 
 	if (it != lista_wypozyczen_zwroty.end()) {
-		lista_wypozyczen_zwroty.erase(it);  // Usuñ zwrot z wektora
+		lista_wypozyczen_zwroty.erase(it);  // UsuÃ± zwrot z wektora
 		saveToFileZwroty();                 // Zapisz zmiany do pliku
 	}
 	else {
@@ -1024,11 +1024,11 @@ void BazaWypozyczen::usunZwrot(int isbn) {
 
 void BazaWypozyczen::checkAndBlockLateUsers(BazaUzytkownikow& baza_uzytkownikow) {
 	for (auto wyp : lista_wypozyczen) {
-		if (isPastDate(wyp.data_oddania)) { // SprawdŸ, czy data oddania minê³a
-			std::cerr << "OpóŸnione zwrócenie ksi¹¿ki przez u¿ytkownika: "
+		if (isPastDate(wyp.data_oddania)) { // SprawdÅ¸, czy data oddania minÃªÂ³a
+			std::cerr << "OpÃ³Å¸nione zwrÃ³cenie ksiÂ¹Â¿ki przez uÂ¿ytkownika: "
 				<< wyp.getLogin() << std::endl;
 
-			// Zablokuj u¿ytkownika
+			// Zablokuj uÂ¿ytkownika
 			baza_uzytkownikow.blockUser(wyp.getLogin());
 		}
 	}
